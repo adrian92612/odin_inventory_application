@@ -1,6 +1,7 @@
 import app from "../app.js";
 import debugLib from "debug";
 import http from "http";
+import "dotenv/config";
 
 const debug = debugLib("your-app:server");
 
