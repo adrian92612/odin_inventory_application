@@ -9,10 +9,10 @@ const CategorySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  url: {
-    type: String,
-    required: true,
-  },
+});
+
+CategorySchema.virtual("url", function () {
+  return `/category/${this._id}`;
 });
 
 export default mongoose.model("Category", CategorySchema);

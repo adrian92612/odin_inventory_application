@@ -22,15 +22,15 @@ const ItemSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  supplier: {
-    type: String,
-    required: false,
-  },
   dateAdded: {
     type: Date,
     immutable: true,
     default: Date.now,
   },
+});
+
+ItemSchema.virtual("url", function () {
+  return `/item/${this._id}`;
 });
 
 export default mongoose.model("Item", ItemSchema);
