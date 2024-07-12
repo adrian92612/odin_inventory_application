@@ -1,8 +1,8 @@
 #! /usr/bin/env node
 
-import Item from "./models/item";
-import Category from "./models/category";
-import mongoose, { modelNames } from "mongoose";
+import Item from "./models/item.js";
+import Category from "./models/category.js";
+import mongoose from "mongoose";
 
 // get arguments passed on command line
 const userArgs = process.argv.slice(2);
@@ -16,14 +16,18 @@ const mongoDB = userArgs[0];
 main().catch((err) => console.log(err));
 
 async function main() {
-  console.log("Debug: About to connect");
-  await mongoose.connect(mongoDB);
-  await clearDB().catch((err = console.log(err)));
-  console.log("Debug: Should be connected?");
-  await createCategories();
-  await createItems();
-  console.log("Debug: Closing mongoose");
-  mongoose.connection.close();
+  try {
+    console.log("Debug: About to connect");
+    await mongoose.connect(mongoDB);
+    await clearDB();
+    console.log("Debug: Should be connected?");
+    await createCategories();
+    await createItems();
+    console.log("Debug: Closing mongoose");
+    mongoose.connection.close();
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function clearDB() {
@@ -37,7 +41,7 @@ async function categoryCreate(index, name, description) {
 }
 
 async function itemCreate(index, name, description, category, price, numberInStock) {
-  item[index] = await Item.create({
+  items[index] = await Item.create({
     name,
     description,
     category,
