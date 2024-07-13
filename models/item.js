@@ -24,6 +24,9 @@ const ItemSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  supplier: {
+    type: String,
+  },
   dateAdded: {
     type: Date,
     immutable: true,

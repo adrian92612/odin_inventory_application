@@ -13,4 +13,9 @@ router.get("/items", item_controller.itemList);
 // item details page
 router.get("/items/:id", item_controller.itemDetails);
 
+router
+  .route("/item/create")
+  .get(item_controller.itemCreate_get)
+  .post(item_controller.itemCreate_post);
+
 export default router;

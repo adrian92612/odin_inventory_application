@@ -48,7 +48,6 @@ export const itemList = asyncHandler(async (req, res, next) => {
   });
 });
 
-//
 export const itemDetails = asyncHandler(async (req, res, next) => {
   const item = await Item.findById(req.params.id).populate(`category`).exec();
 
@@ -63,3 +62,13 @@ export const itemDetails = asyncHandler(async (req, res, next) => {
     item,
   });
 });
+
+export const itemCreate_get = asyncHandler(async (req, res, next) => {
+  const categories = await Category.find().exec();
+  res.render(`item_create`, {
+    title: `Add an Item`,
+    categories,
+  });
+});
+
+export const itemCreate_post = [];
