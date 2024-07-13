@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 
 import indexRouter from "./routes/index.js";
 import usersRouter from "./routes/users.js";
+import inventoryRouter from "./routes/inventory.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -35,6 +36,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
+app.use("/inventory", inventoryRouter);
 app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler

@@ -1,5 +1,14 @@
+//- should provide the following information:
+//- Inventory Summary: number of items, number of categories, total stock value
+//- Category Summary: number of items in each category
+//- Stock Levels: low and out of stock items
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 Invetory Overview
+  
+  h2 Inventory Summary
+    ul 
+      li Total Number of Items: #{overviewData.totalItems}
+      li Total Number of Categories: #{overviewData.totalCategories}
+      li Total Stock Value: USD #{overviewData.totalStockValue}
