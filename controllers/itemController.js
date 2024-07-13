@@ -85,7 +85,7 @@ export const itemCreate_post = [
 
     if (!errors.isEmpty()) {
       res.render(`item_form`, {
-        title: `Add an Item`,
+        title: `Add Item`,
         item: req.body,
         errors: errors.array(),
       });
@@ -93,6 +93,43 @@ export const itemCreate_post = [
     } else {
       const newItem = await Item.create(req.body);
       res.redirect(newItem.url);
+    }
+  }),
+];
+
+export const itemUpdate_get = asyncHandler(async (req, res, next) => {
+  const [item, categories] = await Promise.all([
+    Item.findById(req.params.id).exec(),
+    Category.find().sort({ name: 1 }).exec(),
+  ]);
+  res.render(`item_form`, {
+    title: `Update Item`,
+    item,
+    categories,
+  });
+});
+
+export const itemUpdate_post = [
+  // validate and sanitize fields
+  body(`name`, `Name must be specified`).trim().isLength({ min: 1 }).escape(),
+  body(`description`, `Description must be provided`).trim().isLength({ min: 1 }).escape(),
+  body(`supplier`).trim().escape(),
+
+  // process request after validation and sanitization
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if (!errors.isEmpty()) {
+      res.render(`item_form`, {
+        title: `Update Item`,
+        item: req.body,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      res.redirect(updatedItem.url);
     }
   }),
 ];

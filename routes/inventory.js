@@ -11,11 +11,16 @@ router.get("/", item_controller.index);
 router.get("/items", item_controller.itemList);
 
 // item details page
-router.get("/items/:id", item_controller.itemDetails);
+router.get("/item/:id", item_controller.itemDetails);
 
 router
   .route("/item/create")
   .get(item_controller.itemCreate_get)
   .post(item_controller.itemCreate_post);
+
+router
+  .route("/item/:id/update")
+  .get(item_controller.itemUpdate_get)
+  .post(item_controller.itemUpdate_post);
 
 export default router;
