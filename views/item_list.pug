@@ -1,0 +1,19 @@
+extends layout 
+
+block content
+  h1= title 
+  
+  if items.length 
+    ul 
+      each item in items 
+        li 
+          p Name: 
+            a(href=item.url) #[strong #{item.name}] 
+          p Description: #{item.description}
+          p Number In Stock: #{item.numberInStock}
+          p Price: #{item.formattedPrice}
+          p Category: 
+            a(href=item.category.url) #[strong #{item.category.name}] 
+          p Date Added: #{item.dateAdded_formatted}
+  else 
+    p There are no items.

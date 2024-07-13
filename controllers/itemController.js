@@ -3,11 +3,14 @@ import Category from "../models/category.js";
 import asyncHandler from "express-async-handler";
 import { formatPrice } from "../Helpers/helpers.js";
 
+// Display Home/Overview Page
 export const index = asyncHandler(async (req, res, next) => {
-  //- should provide the following information:
-  //- Inventory Summary: number of items, number of categories, total stock value
-  //- Category Summary: number of items in each category
-  //- Stock Levels: low and out of stock items
+  /* 
+    should provide the following information:
+    Inventory Summary: number of items, number of categories, total stock value
+    Category Summary: number of items in each category
+    Stock Levels: low and out of stock items 
+  */
   const [items, categories] = await Promise.all([
     Item.find().populate("category").exec(),
     Category.find().exec(),
@@ -33,5 +36,14 @@ export const index = asyncHandler(async (req, res, next) => {
     mostValuableItems,
   };
 
-  res.render("index", { title: "Home", overviewData });
+  res.render("index", { title: "Inventory Overview", overviewData });
+});
+
+// Display List of all Items
+export const itemList = asyncHandler(async (req, res, next) => {
+  const items = await Item.find().populate("category").exec();
+  res.render(`item_list`, {
+    title: `Item List`,
+    items,
+  });
 });
