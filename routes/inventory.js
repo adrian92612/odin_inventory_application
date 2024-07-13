@@ -10,9 +10,6 @@ router.get("/", item_controller.index);
 // item list page
 router.get("/items", item_controller.itemList);
 
-// item details page
-router.get("/item/:id", item_controller.itemDetails);
-
 router
   .route("/item/create")
   .get(item_controller.itemCreate_get)
@@ -22,5 +19,12 @@ router
   .route("/item/:id/update")
   .get(item_controller.itemUpdate_get)
   .post(item_controller.itemUpdate_post);
+
+router
+  .route("/item/:id/delete")
+  .get(item_controller.itemDelete_get)
+  .post(item_controller.itemDelete_post);
+
+router.get("/item/:id", item_controller.itemDetails);
 
 export default router;

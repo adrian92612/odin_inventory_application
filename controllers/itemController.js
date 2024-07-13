@@ -133,3 +133,16 @@ export const itemUpdate_post = [
     }
   }),
 ];
+
+export const itemDelete_get = asyncHandler(async (req, res, next) => {
+  const item = await Item.findById(req.params.id).populate("category").exec();
+  res.render(`item_delete`, {
+    title: `Delete ${item.name}?`,
+    item,
+  });
+});
+
+export const itemDelete_post = asyncHandler(async (req, res, next) => {
+  await Item.findByIdAndDelete(req.body.itemid).exec();
+  res.redirect(`/inventory/items`);
+});
