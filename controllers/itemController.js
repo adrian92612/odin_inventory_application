@@ -2,6 +2,7 @@ import Item from "../models/item.js";
 import Category from "../models/category.js";
 import asyncHandler from "express-async-handler";
 import { formatPrice } from "../Helpers/helpers.js";
+import { body, validationResult } from "express-validator";
 
 // Display Home/Overview Page
 export const index = asyncHandler(async (req, res, next) => {
@@ -64,11 +65,34 @@ export const itemDetails = asyncHandler(async (req, res, next) => {
 });
 
 export const itemCreate_get = asyncHandler(async (req, res, next) => {
-  const categories = await Category.find().exec();
-  res.render(`item_create`, {
+  const categories = await Category.find().sort({ name: 1 }).exec();
+  console.log(categories);
+  res.render(`item_form`, {
     title: `Add an Item`,
     categories,
   });
 });
 
-export const itemCreate_post = [];
+export const itemCreate_post = [
+  // validate and sanitize fields
+  body(`name`, `Name must be specified`).trim().isLength({ min: 1 }).escape(),
+  body(`description`, `Description must be provided`).trim().isLength({ min: 1 }).escape(),
+  body(`supplier`).trim().escape(),
+
+  // process request after validation and sanitization
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render(`item_form`, {
+        title: `Add an Item`,
+        item: req.body,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      const newItem = await Item.create(req.body);
+      res.redirect(newItem.url);
+    }
+  }),
+];
