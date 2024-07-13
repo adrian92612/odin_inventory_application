@@ -8,7 +8,39 @@ block content
   h1 Invetory Overview
   
   h2 Inventory Summary
-    ul 
-      li Total Number of Items: #{overviewData.totalItems}
-      li Total Number of Categories: #{overviewData.totalCategories}
-      li Total Stock Value: USD #{overviewData.totalStockValue}
+  ul 
+    li Total Number of Items: #{overviewData.totalItems}
+    li Total Number of Categories: #{overviewData.totalCategories}
+    li Total Stock Value: #{overviewData.totalStockValue}
+  
+  h2 Category Summary 
+  ul 
+    each category in overviewData.categories 
+      li 
+        span #{category.name}: #{category.itemCount} items
+
+  h2 Stock Levels 
+  h3 Low Stock Alerts
+  ul
+    if overviewData.lowStockItems.length
+      each item in overviewData.lowStockItems
+        li #{item.name} - #{item.numberInStock} left
+    else
+      li No low stock items
+
+  h3 Out of Stock Items
+  ul
+    if overviewData.outOfStockItems.length
+      each item in overviewData.outOfStockItems
+        li #{item.name}
+    else
+      li No out of stock items
+
+  h2 Financial Metrics
+  ul
+    li Total Inventory Value: #{overviewData.totalStockValue}
+    li Most Valuable Items:
+    ul
+      each item in overviewData.mostValuableItems
+        li #{item.name} - #{item.formattedPrice}
+

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { format } from "date-fns";
+import { formatPrice } from "../Helpers/helpers.js";
 
 const ItemSchema = new mongoose.Schema({
   name: {
@@ -34,8 +35,8 @@ ItemSchema.virtual("url").get(function () {
   return `inventory/item/${this._id}`;
 });
 
-ItemSchema.virtual("price_currency").get(function () {
-  return `USD ${this.price}`;
+ItemSchema.virtual("formattedPrice").get(function () {
+  return formatPrice(this.price);
 });
 
 ItemSchema.virtual("dateAdded_formatted").get(function () {
