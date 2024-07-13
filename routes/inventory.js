@@ -10,4 +10,7 @@ router.get("/", item_controller.index);
 // item list page
 router.get("/items", item_controller.itemList);
 
+// item details page
+router.get("/items/:id", item_controller.itemDetails);
+
 export default router;

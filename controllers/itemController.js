@@ -47,3 +47,19 @@ export const itemList = asyncHandler(async (req, res, next) => {
     items,
   });
 });
+
+//
+export const itemDetails = asyncHandler(async (req, res, next) => {
+  const item = await Item.findById(req.params.id).populate(`category`).exec();
+
+  if (!item) {
+    const error = new Error(`Item not found`);
+    error.status = 404;
+    return next(error);
+  }
+
+  res.render(`item_details`, {
+    title: `Item Details`,
+    item,
+  });
+});

@@ -32,7 +32,7 @@ const ItemSchema = new mongoose.Schema({
 });
 
 ItemSchema.virtual("url").get(function () {
-  return `inventory/item/${this._id}`;
+  return `/inventory/items/${this._id}`;
 });
 
 ItemSchema.virtual("formattedPrice").get(function () {
