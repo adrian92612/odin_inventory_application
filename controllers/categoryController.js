@@ -47,3 +47,8 @@ export const categoryDetails = asyncHandler(async (req, res, next) => {
     category,
   });
 });
+
+export const categoryCreate_get = (req, res, next) =>
+  res.render(`category_form`, { title: `Create a Category` });
+
+export const categoryCreate_post = [];

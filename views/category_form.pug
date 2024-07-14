@@ -1,0 +1,24 @@
+extends layout 
+
+block content 
+  h1= title 
+  form(method="post") 
+    div 
+      label(for="name") Name
+      input#name(type="text" name='name' aria-label='Category name' required value=(category ? category.name : ''))
+
+    div 
+      label(for="description") Description
+      textarea#description(name="description" aria-label='Category description' required) 
+        if category 
+          | #{category.description}
+    
+    div 
+      button(type="submit") Submit
+
+  a(href=category ? category.url : '/inventory/categories') Cancel 
+
+  if errors
+    ul
+      each error in errors
+        li!= error.msg

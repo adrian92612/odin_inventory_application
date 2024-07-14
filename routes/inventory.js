@@ -37,6 +37,11 @@ router.get("/item/:id", item_controller.itemDetails);
 router.get("/categories", category_controller.categoryList);
 
 // create
+router
+  .route("/category/create")
+  .get(category_controller.categoryCreate_get)
+  .post(category_controller.categoryCreate_post);
+
 // update
 // delete
 

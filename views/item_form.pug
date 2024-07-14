@@ -33,12 +33,12 @@ block content
       label(for="supplier") Supplier:
       input#supplier(type="text" name="supplier" aria-label="Supplier" value=(item ? item.supplier : ''))
 
-    if errors
-      ul
-        each error in errors
-          li= error.msg
-
     div
       button(type="submit") Submit
 
   a(href=item ? item.url : `/inventory/items`) Cancel
+
+  if errors
+    ul
+      each error in errors
+        li!= error.msg
