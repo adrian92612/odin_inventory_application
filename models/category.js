@@ -11,8 +11,14 @@ const CategorySchema = new mongoose.Schema({
   },
 });
 
+CategorySchema.virtual("items", {
+  ref: "Item",
+  localField: "_id",
+  foreignField: "category",
+});
+
 CategorySchema.virtual("url").get(function () {
-  return `/inventory/categories/${this._id}`;
+  return `/inventory/category/${this._id}`;
 });
 
 export default mongoose.model("Category", CategorySchema);

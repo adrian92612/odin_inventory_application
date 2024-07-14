@@ -40,9 +40,13 @@ export const index = asyncHandler(async (req, res, next) => {
   res.render("index", { title: "Inventory Overview", overviewData });
 });
 
-// Display List of all Items
 export const itemList = asyncHandler(async (req, res, next) => {
-  const items = await Item.find().populate("category").exec();
+  const items = await Item.find()
+    .collation({ locale: "en", strength: 2 })
+    .sort({ name: 1 })
+    .populate("category")
+    .exec();
+
   res.render(`item_list`, {
     title: `Item List`,
     items,
