@@ -6,14 +6,18 @@ block content
   h2 Details 
   p Name: #{category.name}
   p Description: #{category.description}
+
   if category.items.length 
     p Items:
     ul 
       each item in category.items 
         li 
-          a(href=item.url) #{item.name} 
+          a(href=item.url) #{item.name}
   else 
-    p There currently no items in #{category.name}
+    p There currently no items in #{category.name} 
+  
+  p Last Modified: #{category.dateModified_formatted} 
+  p Date Added: #{category.dateAdded_formatted}
 
   p 
     a(href=`${category.url}/update`) Update  

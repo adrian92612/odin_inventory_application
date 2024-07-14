@@ -43,6 +43,10 @@ router
   .post(category_controller.categoryCreate_post);
 
 // update
+router
+  .route("/category/:id/update")
+  .get(category_controller.categoryUpdate_get)
+  .post(category_controller.categoryUpdate_post);
 // delete
 
 // details

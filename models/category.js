@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { format } from "date-fns";
 
 const CategorySchema = new mongoose.Schema({
   name: {
@@ -28,6 +29,14 @@ const CategorySchema = new mongoose.Schema({
 
 CategorySchema.virtual("url").get(function () {
   return `/inventory/category/${this._id}`;
+});
+
+CategorySchema.virtual("dateAdded_formatted").get(function () {
+  return format(this.dateAdded, "do MMMMMM yyyy p OO");
+});
+
+CategorySchema.virtual("dateModified_formatted").get(function () {
+  return format(this.dateModified, "do MMMMMM yyyy p OO");
 });
 
 export default mongoose.model("Category", CategorySchema);

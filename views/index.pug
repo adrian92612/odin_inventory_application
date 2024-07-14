@@ -17,7 +17,7 @@ block content
   ul 
     each category in overviewData.categories 
       li 
-        span #{category.name}: #{category.itemCount} items
+        span #{category.name}: #{category.itemCount} #{category.itemCount < 2 ? 'Item' : 'Items'}
 
   h2 Stock Levels 
   h3 Low Stock Alerts
