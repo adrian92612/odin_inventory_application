@@ -13,7 +13,17 @@ block content
   p Last Modified: #{item.dateModified_formatted}
   p Date Added: #{item.dateAdded_formatted}
 
-  p
-    a(href=item.url+'/update') Update 
-  p
-    a(href=item.url+'/delete') Delete 
+  if toDelete 
+    p Do you wish to permanently delete this item?
+
+    div 
+      form(method="POST") 
+        input(type="hidden" name='itemid' value=item._id)
+        button(type="submit") Delete 
+      a(href=item.url) Cancel
+  else 
+
+    p
+      a(href=item.url+'/update') Update 
+    p
+      a(href=item.url+'/delete') Delete 

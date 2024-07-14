@@ -144,9 +144,10 @@ export const itemUpdate_post = [
 
 export const itemDelete_get = asyncHandler(async (req, res, next) => {
   const item = await Item.findById(req.params.id).populate("category").exec();
-  res.render(`item_delete`, {
-    title: `Delete ${item.name}?`,
+  res.render(`item_details`, {
+    title: `Delete Item?`,
     item,
+    toDelete: true,
   });
 });
 
