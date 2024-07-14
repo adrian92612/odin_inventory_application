@@ -150,7 +150,7 @@ export const itemDelete_get = asyncHandler(async (req, res, next) => {
 });
 
 export const itemDelete_post = [
-  body("password", "Incorrect Admin Password").matches(process.env.SECRET_PASSWORD),
+  body("password", "Incorrect Admin Password").equals(process.env.SECRET_PASSWORD),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);

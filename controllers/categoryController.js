@@ -129,7 +129,7 @@ export const categoryDelete_get = asyncHandler(async (req, res, next) => {
 });
 
 export const categoryDelete_post = [
-  body("password", "Incorrect Admin Password").matches(process.env.SECRET_PASSWORD),
+  body("password", "Incorrect Admin Password").equals(process.env.SECRET_PASSWORD),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
