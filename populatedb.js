@@ -48,6 +48,12 @@ async function itemCreate(index, name, description, category, price, numberInSto
     price,
     numberInStock,
   });
+
+  await Category.findByIdAndUpdate(
+    category._id,
+    { $push: { items: items[index]._id } },
+    { new: true }
+  );
   console.log(`Added item: ${name}`);
 }
 
