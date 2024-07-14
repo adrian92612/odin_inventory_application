@@ -3,6 +3,7 @@ import Category from "../models/category.js";
 import asyncHandler from "express-async-handler";
 import { formatPrice } from "../Helpers/helpers.js";
 import { body, validationResult } from "express-validator";
+import "dotenv/config";
 
 // Display Home/Overview Page
 export const index = asyncHandler(async (req, res, next) => {
@@ -151,7 +152,25 @@ export const itemDelete_get = asyncHandler(async (req, res, next) => {
   });
 });
 
-export const itemDelete_post = asyncHandler(async (req, res, next) => {
-  await Item.findByIdAndDelete(req.body.itemid).exec();
-  res.redirect(`/inventory/items`);
-});
+export const itemDelete_post = [
+  body("password", "Incorrect Admin Password").matches(process.env.SECRET_PASSWORD),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    console.log(errors.array());
+
+    if (!errors.isEmpty()) {
+      const item = await Item.findById(req.params.id).populate("category").exec();
+      res.render(`item_details`, {
+        title: `Delete Item?`,
+        item,
+        toDelete: true,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      await Item.findByIdAndDelete(req.body.itemid).exec();
+      res.redirect(`/inventory/items`);
+    }
+  }),
+];

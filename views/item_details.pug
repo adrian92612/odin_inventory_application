@@ -19,6 +19,11 @@ block content
     div 
       form(method="POST") 
         input(type="hidden" name='itemid' value=item._id)
+        div 
+          label(for="password") Password 
+          input#password(type="text" name='password' placeholder='Enter Admin Password' required)
+        p #{errors ? errors[0].msg : ''}
+
         button(type="submit") Delete 
       a(href=item.url) Cancel
   else 
