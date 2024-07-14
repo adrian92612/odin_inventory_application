@@ -109,3 +109,26 @@ export const categoryUpdate_post = [
     }
   }),
 ];
+
+export const categoryDelete_get = asyncHandler(async (req, res, next) => {
+  const category = await Category.findById(req.params.id)
+    .populate({
+      path: "items",
+      select: "name",
+      options: {
+        collation: { locale: "en", strength: 2 },
+        sort: { name: 1 },
+      },
+    })
+    .exec();
+  res.render(`category_details`, {
+    title: `Delete Category?`,
+    category,
+    toDelete: true,
+  });
+});
+
+export const categoryDelete_post = asyncHandler(async (req, res, next) => {
+  await Category.findByIdAndDelete(req.body.categoryid).exec();
+  res.redirect("/inventory/categories");
+});

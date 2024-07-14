@@ -19,7 +19,23 @@ block content
   p Last Modified: #{category.dateModified_formatted} 
   p Date Added: #{category.dateAdded_formatted}
 
-  p 
-    a(href=`${category.url}/update`) Update  
-  p 
-    a(href=`${category.url}/delete`) Delete
+  if toDelete 
+    if category.items.length 
+      p Remove all items under this category before deleting.
+      a(href=category.url) Cancel
+
+    else 
+      p Do you wish to delete this category?
+
+      div 
+        form(method="POST") 
+          input(type="hidden" name='categoryid' value=category._id)
+          button(type="submit") Delete 
+        a(href=category.url) Cancel
+
+
+  else 
+    p 
+      a(href=`${category.url}/update`) Update  
+    p 
+      a(href=`${category.url}/delete`) Delete

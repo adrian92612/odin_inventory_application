@@ -47,7 +47,12 @@ router
   .route("/category/:id/update")
   .get(category_controller.categoryUpdate_get)
   .post(category_controller.categoryUpdate_post);
+
 // delete
+router
+  .route("/category/:id/delete")
+  .get(category_controller.categoryDelete_get)
+  .post(category_controller.categoryDelete_post);
 
 // details
 router.get("/category/:id", category_controller.categoryDetails);
