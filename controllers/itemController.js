@@ -29,10 +29,7 @@ export const index = asyncHandler(async (req, res, next) => {
     totalItems,
     totalCategories,
     totalStockValue: formatPrice(totalStockValue),
-    categories: categories.map((category) => ({
-      name: category.name,
-      itemCount: items.filter((item) => item.category._id.equals(category._id)).length,
-    })),
+    categories,
     lowStockItems,
     outOfStockItems,
     mostValuableItems,
@@ -71,7 +68,6 @@ export const itemDetails = asyncHandler(async (req, res, next) => {
 
 export const itemCreate_get = asyncHandler(async (req, res, next) => {
   const categories = await Category.find().sort({ name: 1 }).exec();
-  console.log(categories);
   res.render(`item_form`, {
     title: `Add an Item`,
     categories,
@@ -97,6 +93,8 @@ export const itemCreate_post = [
       return;
     } else {
       const newItem = await Item.create(req.body);
+      await Category.findByIdAndUpdate(newItem.category._id, { $push: { items: newItem._id } });
+      console.log(req.body);
       res.redirect(newItem.url);
     }
   }),
@@ -123,7 +121,6 @@ export const itemUpdate_post = [
   // process request after validation and sanitization
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
-    console.log(req.body);
 
     if (!errors.isEmpty()) {
       res.render(`item_form`, {
@@ -157,7 +154,6 @@ export const itemDelete_post = [
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
-    console.log(errors.array());
 
     if (!errors.isEmpty()) {
       const item = await Item.findById(req.params.id).populate("category").exec();
