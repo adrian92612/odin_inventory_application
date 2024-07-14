@@ -7,7 +7,7 @@ const router = express.Router();
 // home page
 router.get("/", item_controller.index);
 
-// item
+// Item
 // list
 router.get("/items", item_controller.itemList);
 
@@ -35,5 +35,12 @@ router.get("/item/:id", item_controller.itemDetails);
 // Category
 // list
 router.get("/categories", category_controller.categoryList);
+
+// create
+// update
+// delete
+
+// details
+router.get("/category/:id", category_controller.categoryDetails);
 
 export default router;

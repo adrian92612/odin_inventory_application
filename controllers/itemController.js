@@ -132,7 +132,11 @@ export const itemUpdate_post = [
       });
       return;
     } else {
-      const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      const updatedItem = await Item.findByIdAndUpdate(
+        req.params.id,
+        { ...req.body, dateModified: new Date() },
+        { new: true }
+      );
       res.redirect(updatedItem.url);
     }
   }),

@@ -15,13 +15,16 @@ const CategorySchema = new mongoose.Schema({
       ref: "Item",
     },
   ],
+  dateAdded: {
+    type: Date,
+    immutable: true,
+    default: Date.now,
+  },
+  dateModified: {
+    type: Date,
+    default: Date.now,
+  },
 });
-
-// CategorySchema.virtual("items", {
-//   ref: "Item",
-//   localField: "_id",
-//   foreignField: "category",
-// });
 
 CategorySchema.virtual("url").get(function () {
   return `/inventory/category/${this._id}`;

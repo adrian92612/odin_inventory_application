@@ -3,3 +3,19 @@ extends layout
 block content 
   h1= title 
   
+  h2 Details 
+  p Name: #{category.name}
+  p Description: #{category.description}
+  if category.items.length 
+    p Items:
+    ul 
+      each item in category.items 
+        li 
+          a(href=item.url) #{item.name} 
+  else 
+    p There currently no items in #{category.name}
+
+  p 
+    a(href=`${category.url}/update`) Update  
+  p 
+    a(href=`${category.url}/delete`) Delete

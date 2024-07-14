@@ -9,6 +9,9 @@ block content
     a(href=item.category.url)  #{item.category.name}
   p In Stock: #{item.numberInStock}
   p Price: #{item.formattedPrice}
+  p Supplier: #{item.supplier}
+  p Last Modified: #{item.dateModified_formatted}
+  p Date Added: #{item.dateAdded_formatted}
 
   p
     a(href=item.url+'/update') Update 

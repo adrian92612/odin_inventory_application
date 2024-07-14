@@ -32,6 +32,10 @@ const ItemSchema = new mongoose.Schema({
     immutable: true,
     default: Date.now,
   },
+  dateModified: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 ItemSchema.virtual("url").get(function () {
@@ -44,6 +48,10 @@ ItemSchema.virtual("formattedPrice").get(function () {
 
 ItemSchema.virtual("dateAdded_formatted").get(function () {
   return format(this.dateAdded, "do MMMMMM yyyy p OO");
+});
+
+ItemSchema.virtual("dateModified_formatted").get(function () {
+  return format(this.dateModified, "do MMMMMM yyyy p OO");
 });
 
 export default mongoose.model("Item", ItemSchema);
